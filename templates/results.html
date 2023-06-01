@@ -15,6 +15,10 @@
             <strong>PubMed ID:</strong> {{ article.pubmed_id }}<br>
             <strong>Title:</strong> {{ article.title }}<br>
             <a href="{{ article.url }}">Look up here!!!</a>
+            <button class="author-button" onclick="showAuthors(this)">Authors</button>
+            <div class="authors" style="display: none;">
+                <strong>Authors:</strong> {{ article.authors|join(', ') }}
+            </div>
         </li>
         {% endfor %}
     </ul>
@@ -33,5 +37,16 @@
         <button type="submit">Search Next Page</button>
     </form>
     {% endif %}
+
+    <script>
+        function showAuthors(button) {
+            var authorsDiv = button.nextElementSibling;
+            if (authorsDiv.style.display === "none") {
+                authorsDiv.style.display = "block";
+            } else {
+                authorsDiv.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>

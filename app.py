@@ -42,10 +42,15 @@ def search_papers():
             article_title = summary_data['result'][pubmed_id]['title']
             article_url = f'https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}/'
 
+            # Get the authors' information
+            authors = summary_data['result'][pubmed_id]['authors']
+            author_names = [author['name'] for author in authors]
+
             article_details.append({
                 'pubmed_id': pubmed_id,
                 'title': article_title,
-                'url': article_url
+                'url': article_url,
+                'authors': author_names
             })
 
         return render_template('results.html', article_details=article_details, page=page, total_pages=total_pages)
