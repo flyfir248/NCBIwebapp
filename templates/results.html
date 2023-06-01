@@ -6,6 +6,8 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
+    <button id="mode-toggle" class="toggle-button" onclick="toggleMode()">Toggle Mode</button>
+
     <h1>PubMed Search Results</h1>
 
     <ul>
@@ -13,8 +15,11 @@
         <li>
             <strong>PubMed ID:</strong> {{ article.pubmed_id }}<br>
             <strong>Title:</strong> {{ article.title }}<br>
-            <strong>Authors:</strong> {{ article.authors|join(', ') }}<br>
             <a href="{{ article.url }}">Look up here!!!</a>
+            <button class="author-toggle-button" onclick="toggleAuthors('{{ article.pubmed_id }}')">Show Authors</button>
+            <div id="{{ article.pubmed_id }}" class="authors" style="display: none;">
+                <strong>Authors:</strong> {{ article.authors }}
+            </div>
         </li>
         {% endfor %}
     </ul>
@@ -26,7 +31,11 @@
         {% endif %}
     </div>
 
-    <button id="mode-toggle" onclick="toggleMode()">Toggle Mode</button>
-
+    <script>
+        function toggleAuthors(pubmedId) {
+            var authors = document.getElementById(pubmedId);
+            authors.style.display = (authors.style.display === 'none') ? 'block' : 'none';
+        }
+    </script>
 </body>
 </html>

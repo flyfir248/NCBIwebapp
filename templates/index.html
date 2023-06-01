@@ -6,6 +6,8 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
+    <button id="mode-toggle" class="toggle-button" onclick="toggleMode()">Toggle Mode</button>
+
     <h1>PubMed Search</h1>
 
     <form action="{{ url_for('search_papers') }}" method="post">
@@ -13,8 +15,6 @@
         <input type="text" id="term" name="term">
         <button type="submit">Search</button>
     </form>
-
-    <button id="mode-toggle" onclick="toggleMode()">Toggle Mode</button>
 
 </body>
 </html>
