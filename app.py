@@ -7,16 +7,17 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/search', methods=['POST'])
+@app.route('/search', methods=['POST', 'GET'])
 def search_papers():
     search_term = request.form.get('term')
+    page = int(request.form.get('page', 1)) if request.form.get('page') else 1
 
     if not search_term:
         return jsonify({'error': 'Search term is required'}), 400
 
-    # Construct the PubMed API URL with the search term
+    # Construct the PubMed API URL with the search term and page
     base_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi'
-    url = f'{base_url}?db=pubmed&term={search_term}&retmode=json'
+    url = f'{base_url}?db=pubmed&term={search_term}&retmode=json&retstart={((page - 1) * 10)}&retmax=10'
 
     try:
         # Make the request to the PubMed API to get the PubMed IDs
@@ -26,6 +27,8 @@ def search_papers():
         # Extract the PubMed IDs from the API response
         data = response.json()
         pubmed_ids = data['esearchresult']['idlist']
+        total_results = int(data['esearchresult']['count'])
+        total_pages = (total_results // 10) + 1
 
         article_details = []
 
@@ -45,7 +48,7 @@ def search_papers():
                 'url': article_url
             })
 
-        return render_template('results.html', article_details=article_details)
+        return render_template('results.html', article_details=article_details, page=page, total_pages=total_pages)
 
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500

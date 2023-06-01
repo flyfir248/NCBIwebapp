@@ -22,5 +22,13 @@
         <a href="https://pubmed.ncbi.nlm.nih.gov/?term={{ request.form.term }}">Search All Results on NCBI</a>
         {% endif %}
     </div>
+
+    {% if page < total_pages %}
+    <form action="/search" method="post">
+        <input type="hidden" name="term" value="{{ request.form.term }}">
+        <input type="hidden" name="page" value="{{ page + 1 }}">
+        <button type="submit">Search Next Page</button>
+    </form>
+    {% endif %}
 </body>
 </html>
