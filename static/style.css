@@ -1,10 +1,12 @@
-/* style.css */
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 20px;
   text-align: center;
+  min-height: 100vh; /* Set minimum height to occupy full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Align content vertically */
 }
 
 h1 {
@@ -87,48 +89,75 @@ body.dark-mode {
   z-index: 9999;
 }
 
+.space {
+  height: 50px;
+}
+
 button[type=submit]:hover {
-            background-color: #fff;
-            color: #007bff;
-            box-shadow: 0px 0px 10px #007bff;
-        }
-        footer {
-            background-color: #262626;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            font-size: 14px;
-            position: relative;
-            bottom: 0;
-            width: 100%;
-        }
+  background-color: #fff;
+  color: #007bff;
+  box-shadow: 0px 0px 10px #007bff;
+}
 
-        .footer a {
-            color: #fff;
-            text-decoration: none;
-        }
+footer {
+  background-color: #262626;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-size: 14px;
+}
 
-        .footer a:hover {
-            color: #007bff;
-        }
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
 
-        .footer p {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-        }
+.footer a:hover {
+  color: #007bff;
+}
 
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+.footer p {
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
 
-        .social-icons a {
-            margin: 0 10px;
-        }
+.social-icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
 
-        .social-icons img {
-            max-width: 30px;
-            height: auto;
-        }
+.social-icons a {
+  margin: 0 10px;
+}
+
+.social-icons img {
+  max-width: 30px;
+  height: auto;
+}
+
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination .page-button {
+  display: inline-block;
+  padding: 5px 10px;
+  margin-right: 5px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.pagination .page-button:hover {
+  background-color: #0056b3;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-weight: bold;
+  color: #333;
+}
