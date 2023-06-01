@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PubMed Search Results</title>
+</head>
+<body>
+    <h1>PubMed Search Results</h1>
+
+    <ul>
+        {% for article in article_details %}
+        <li>
+            <strong>PubMed ID:</strong> {{ article.pubmed_id }}<br>
+            <strong>Title:</strong> {{ article.title }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
