@@ -2,13 +2,19 @@
 <html>
 <head>
     <title>PubMed Search</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
     <h1>PubMed Search</h1>
 
-    <form action="/search" method="post">
-        <input type="text" name="term" placeholder="Enter search term" required>
+    <form action="{{ url_for('search_papers') }}" method="post">
+        <label for="term">Search Term:</label>
+        <input type="text" id="term" name="term">
         <button type="submit">Search</button>
     </form>
+
+    <button id="mode-toggle" onclick="toggleMode()">Toggle Mode</button>
+
 </body>
 </html>
