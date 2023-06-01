@@ -3,14 +3,17 @@
 <head>
     <title>Abstract</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
     <h1>Abstract</h1>
-    <p><strong>PubMed ID:</strong> {{ pubmed_id }}</p>
-    <p><strong>Abstract:</strong></p>
-    <p>{{ abstract }}</p>
+
+    <div class="abstract-content selected" id="eng-abstract">
+        <p>{{ abstract }}</p>
+    </div>
+
     <div>
-        <a href="{{ url_for('index') }}">Back to Search</a>
+        <a href="{{ url_for('index') }}">Back to Search Results</a>
     </div>
 </body>
 </html>

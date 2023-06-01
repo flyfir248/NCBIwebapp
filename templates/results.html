@@ -14,6 +14,15 @@
         <li>
             <strong>PubMed ID:</strong> {{ article.pubmed_id }}<br>
             <strong>Title:</strong> {{ article.title }}<br>
+            <button class="abstract-button" onclick="showAbstract(this)">Abstract</button>
+            <div class="abstract-content" style="display: none;">
+                {% if article.abstract %}
+                    <h3>Abstract</h3>
+                    <p>{{ article.abstract }}</p>
+                {% else %}
+                    <p>Abstract Not Found</p>
+                {% endif %}
+            </div>
             <a href="{{ article.url }}">Look up here!!!</a>
             <button class="author-button" onclick="showAuthors(this)">Authors</button>
             <div class="authors" style="display: none;">
@@ -39,6 +48,15 @@
     {% endif %}
 
     <script>
+        function showAbstract(button) {
+            var abstractDiv = button.nextElementSibling;
+            if (abstractDiv.style.display === "none") {
+                abstractDiv.style.display = "block";
+            } else {
+                abstractDiv.style.display = "none";
+            }
+        }
+
         function showAuthors(button) {
             var authorsDiv = button.nextElementSibling;
             if (authorsDiv.style.display === "none") {
