@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PubMed Abstract</title>
+    <title>Abstract</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
-    <h1>PubMed Abstract</h1>
-    <h2>PubMed ID: {{ pubmed_id }}</h2>
+    <h1>Abstract</h1>
+    <p><strong>PubMed ID:</strong> {{ pubmed_id }}</p>
+    <p><strong>Abstract:</strong></p>
+    <p>{{ abstract }}</p>
     <div>
-        {% if abstract %}
-            {{ abstract }}
-        {% else %}
-            <p>Abstract not found.</p>
-        {% endif %}
+        <a href="{{ url_for('index') }}">Back to Search</a>
     </div>
 </body>
 </html>
