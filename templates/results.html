@@ -10,9 +10,17 @@
         {% for article in article_details %}
         <li>
             <strong>PubMed ID:</strong> {{ article.pubmed_id }}<br>
-            <strong>Title:</strong> {{ article.title }}
+            <strong>Title:</strong> {{ article.title }}<br>
+            <a href="{{ article.url }}">Look up here!!!</a>
         </li>
         {% endfor %}
     </ul>
+
+    <div>
+        <a href="{{ url_for('index') }}">Back to Search</a>
+        {% if 'term' in request.form %}
+        <a href="https://pubmed.ncbi.nlm.nih.gov/?term={{ request.form.term }}">Search All Results on NCBI</a>
+        {% endif %}
+    </div>
 </body>
 </html>

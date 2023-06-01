@@ -37,10 +37,12 @@ def search_papers():
 
             summary_data = summary_response.json()
             article_title = summary_data['result'][pubmed_id]['title']
+            article_url = f'https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}/'
 
             article_details.append({
                 'pubmed_id': pubmed_id,
-                'title': article_title
+                'title': article_title,
+                'url': article_url
             })
 
         return render_template('results.html', article_details=article_details)
