@@ -6,6 +6,16 @@
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
+    <a href="https://pythonpythonme.netlify.app/index.html">
+    <div class="header-image">
+    <img src="https://pythonpythonme.netlify.app/PythonPythonME.png" alt="Header image">
+    </div>
+    </a>
+    <p></p>
+    <p></p>
+    <p></p>
+    <button id="mode-toggle" class="toggle-button" onclick="toggleMode()">Toggle Mode</button>
+
     <h1>PubMed Search Results</h1>
 
     <ul>
@@ -13,9 +23,11 @@
         <li>
             <strong>PubMed ID:</strong> {{ article.pubmed_id }}<br>
             <strong>Title:</strong> {{ article.title }}<br>
-            <button class="show-authors" data-pubmed-id="{{ article.pubmed_id }}">Show Authors</button>
-            <div class="authors" id="authors-{{ article.pubmed_id }}"></div>
             <a href="{{ article.url }}">Look up here!!!</a>
+            <button class="author-toggle-button" onclick="toggleAuthors('{{ article.pubmed_id }}')">Show Authors</button>
+            <div id="{{ article.pubmed_id }}" class="authors" style="display: none;">
+                <strong>Authors:</strong> {{ article.authors }}
+            </div>
         </li>
         {% endfor %}
     </ul>
@@ -28,14 +40,37 @@
     </div>
 
     <script>
-        var showAuthorsButtons = document.getElementsByClassName('show-authors');
-        for (var i = 0; i < showAuthorsButtons.length; i++) {
-            showAuthorsButtons[i].addEventListener('click', function () {
-                var pubmedId = this.getAttribute('data-pubmed-id');
-                var authorsDiv = document.getElementById('authors-' + pubmedId);
-                authorsDiv.style.display = authorsDiv.style.display === 'none' ? 'block' : 'none';
-            });
+        function toggleAuthors(pubmedId) {
+            var authors = document.getElementById(pubmedId);
+            authors.style.display = (authors.style.display === 'none') ? 'block' : 'none';
         }
     </script>
+    <p></p>
+    <p></p>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Anoop Johny 🤖</h4>
+                </div>
+            <div class="col-md-4 text-center">
+                <h4>Follow Me</h4>
+                <ul class="social-icons">
+                    <a href="https://www.linkedin.com/in/anoop-johny-30a746181/"><img src="{{ url_for('static', filename='res/linkedin.png') }}" alt="LinkedIn"></a>
+                    <a href="https://github.com/flyfir248"><img src="{{ url_for('static', filename='res/github.png') }}" alt="GitHub"></a>
+                    <a href="https://pythonpythonme.netlify.app/index.html"><img src="{{ url_for('static', filename='res/web.png') }}" alt="Website"></a>
+                    <a href="https://medium.com/@anoopjohny2000"><img src="{{ url_for('static', filename='res/medium.png') }}" alt="Medium"></a>
+                    <a href="https://www.kooapp.com/profile/anoop2DEVLJ"><img src="https://www.kooapp.com/_next/static/media/logoKuSolidOutline.1f4fa971.svg" alt="The Koo App" width="55" height="55"></a>
+                </ul>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-muted">© 2023-2024 PythonPythonME.</p>
+                    <p>All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
