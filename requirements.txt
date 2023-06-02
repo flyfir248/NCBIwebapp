@@ -1,0 +1,7 @@
+click
+Flask
+matplotlib
+numpy
+pandas
+requests
+gunicorn
