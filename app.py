@@ -88,6 +88,28 @@ def abstract(pubmed_id):
     except ET.ParseError as e:
         return jsonify({'error': 'Error parsing XML response'}), 500
 
+@app.route('/keywords/<pubmed_id>')
+def keywords(pubmed_id):
+    # Construct the PubMed API URL to fetch the article summary
+    base_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi'
+    url = f'{base_url}?db=pubmed&id={pubmed_id}&retmode=json'
+
+    try:
+        # Make the request to the PubMed API to get the article summary
+        response = requests.get(url)
+        response.raise_for_status()
+
+        # Extract the keywords from the API response
+        data = response.json()
+        article_keywords = data['result'][pubmed_id]['keywords']
+
+        if article_keywords:
+            return jsonify({'keywords': article_keywords})
+        else:
+            return jsonify({'keywords': 'Keywords Not Found'})
+
+    except requests.exceptions.RequestException as e:
+        return jsonify({'error': str(e)}), 500
 
 
 if __name__ == '__main__':

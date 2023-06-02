@@ -24,6 +24,11 @@
             <div class="authors" style="display: none;">
                 <strong>Authors:</strong> {{ article.authors|join(', ') }}
             </div>
+            <button class="keywords-button" onclick="fetchKeywords('{{ article.pubmed_id }}', this)">Get Keywords</button>
+            <div class="keywords-content" style="display: none;">
+                <h3>Keywords</h3>
+                <ul class="keywords-list"></ul>
+            </div>
         </li>
         {% endfor %}
     </ul>
@@ -74,6 +79,41 @@
                 authorsDiv.style.display = "block";
             } else {
                 authorsDiv.style.display = "none";
+            }
+        }
+
+        function fetchKeywords(pubmedId, button) {
+            var keywordsDiv = button.nextElementSibling;
+            var keywordsList = keywordsDiv.querySelector(".keywords-list");
+
+            if (keywordsDiv.style.display === "none") {
+                if (keywordsList.textContent.trim() === "") {
+                    var url = "/keywords/" + pubmedId;
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.keywords.length > 0) {
+                                data.keywords.forEach(keyword => {
+                                    var listItem = document.createElement("li");
+                                    listItem.textContent = keyword;
+                                    keywordsList.appendChild(listItem);
+                                });
+                            } else {
+                                var listItem = document.createElement("li");
+                                listItem.textContent = "Keywords Not Found";
+                                keywordsList.appendChild(listItem);
+                            }
+
+                            keywordsDiv.style.display = "block";
+                        })
+                        .catch(error => {
+                            console.log("Error fetching keywords:", error);
+                        });
+                } else {
+                    keywordsDiv.style.display = "block";
+                }
+            } else {
+                keywordsDiv.style.display = "none";
             }
         }
 
