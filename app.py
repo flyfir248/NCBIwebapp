@@ -74,11 +74,11 @@ def abstract(pubmed_id):
         xml_data = response.text
         root = ET.fromstring(xml_data)
 
-        # Find the abstract element
-        abstract_element = root.find('.//AbstractText')
+        # Find all the abstract elements
+        abstract_elements = root.findall('.//AbstractText')
 
-        if abstract_element is not None:
-            abstract = abstract_element.text.strip()
+        if abstract_elements:
+            abstract = '\n'.join(abstract_element.text.strip() for abstract_element in abstract_elements)
             return jsonify({'abstract': abstract})
         else:
             return jsonify({'abstract': 'Abstract Not Found'})
@@ -87,6 +87,7 @@ def abstract(pubmed_id):
         return jsonify({'error': str(e)}), 500
     except ET.ParseError as e:
         return jsonify({'error': 'Error parsing XML response'}), 500
+
 
 
 if __name__ == '__main__':
