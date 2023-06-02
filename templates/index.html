@@ -3,9 +3,18 @@
 <head>
     <title>PubMed Search</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='res/favicon.png') }}">
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </head>
 <body>
+    <a href="https://pythonpythonme.netlify.app/index.html">
+    <div class="header-image">
+    <img src="https://pythonpythonme.netlify.app/PythonPythonME.png" alt="Header image">
+    </div>
+    </a>
+    <p></p>
+    <p></p>
+    <p></p>
     <button id="mode-toggle" class="toggle-button" onclick="toggleMode()">Toggle Mode</button>
     <h1>PubMed Search</h1>
 
@@ -13,6 +22,32 @@
         <input type="text" name="term" placeholder="Enter search term" required>
         <button type="submit">Search</button>
     </form>
-
+    <p></p>
+    <p></p>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Anoop Johny 🤖</h4>
+                </div>
+            <div class="col-md-4 text-center">
+                <h4>Follow Me</h4>
+                <ul class="social-icons">
+                    <a href="https://www.linkedin.com/in/anoop-johny-30a746181/"><img src="{{ url_for('static', filename='res/linkedin.png') }}" alt="LinkedIn"></a>
+                    <a href="https://github.com/flyfir248"><img src="{{ url_for('static', filename='res/github.png') }}" alt="GitHub"></a>
+                    <a href="https://pythonpythonme.netlify.app/index.html"><img src="{{ url_for('static', filename='res/web.png') }}" alt="Website"></a>
+                    <a href="https://medium.com/@anoopjohny2000"><img src="{{ url_for('static', filename='res/medium.png') }}" alt="Medium"></a>
+                    <a href="https://www.kooapp.com/profile/anoop2DEVLJ"><img src="https://www.kooapp.com/_next/static/media/logoKuSolidOutline.1f4fa971.svg" alt="The Koo App" width="55" height="55"></a>
+                </ul>
+            </div>
+        </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="text-muted">© 2023-2024 PythonPythonME.</p>
+                    <p>All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
