@@ -12,12 +12,12 @@
     <ul>
         {% for article in article_details %}
         <li>
-            <strong>PubMed ID:</strong> {{ article.pubmed_id }}<br>
+            <strong>PubMed ID:</strong> <span class="pubmed-id">{{ article.pubmed_id }}</span><br>
             <strong>Title:</strong> {{ article.title }}<br>
-            <button class="abstract-button" onclick="fetchAbstract('{{ article.pubmed_id }}')">Get Abstract</button>
-            <div class="abstract-content" id="abstract-{{ article.pubmed_id }}" style="display: none;">
+            <button class="abstract-button" onclick="fetchAbstract('{{ article.pubmed_id }}', this)">Get Abstract</button>
+            <div class="abstract-content" style="display: none;">
                 <h3>Abstract</h3>
-                <p>Loading...</p>
+                <p class="abstract-text"></p>
             </div>
             <a href="{{ article.url }}">Look up here!!!</a>
             <button class="author-button" onclick="showAuthors(this)">Authors</button>
@@ -44,33 +44,25 @@
     {% endif %}
 
     <script>
-        function fetchAbstract(pubmedId) {
-            var abstractDiv = document.getElementById('abstract-' + pubmedId);
-            var abstractButton = document.querySelector(`button[data-pubmed-id="${pubmedId}"]`);
-            if (abstractDiv.style.display === "none") {
-                // Show loading message
-                abstractDiv.innerHTML = '<h3>Abstract</h3><p>Loading...</p>';
-                abstractDiv.style.display = "block";
+        function fetchAbstract(pubmedId, button) {
+            var abstractDiv = button.nextElementSibling;
+            var abstractText = abstractDiv.querySelector(".abstract-text");
 
-                // Make an AJAX request to fetch the abstract
-                var xhr = new XMLHttpRequest();
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.abstract) {
-                            // Display the abstract
-                            abstractDiv.innerHTML = '<h3>Abstract</h3><p>' + response.abstract + '</p>';
-                        } else {
-                            // Display "Abstract Not Found"
-                            abstractDiv.innerHTML = '<p>Abstract Not Found</p>';
-                        }
-                    } else if (xhr.readyState === 4 && xhr.status !== 200) {
-                        // Display an error message
-                        abstractDiv.innerHTML = '<p>Error fetching abstract</p>';
-                    }
-                };
-                xhr.open("GET", "/abstract/" + pubmedId, true);
-                xhr.send();
+            if (abstractDiv.style.display === "none") {
+                if (abstractText.textContent.trim() === "") {
+                    var url = "/abstract/" + pubmedId;
+                    fetch(url)
+                        .then(response => response.text())
+                        .then(data => {
+                            abstractText.textContent = data;
+                            abstractDiv.style.display = "block";
+                        })
+                        .catch(error => {
+                            console.log("Error fetching abstract:", error);
+                        });
+                } else {
+                    abstractDiv.style.display = "block";
+                }
             } else {
                 abstractDiv.style.display = "none";
             }
@@ -83,6 +75,11 @@
             } else {
                 authorsDiv.style.display = "none";
             }
+        }
+
+        function toggleMode() {
+            var body = document.querySelector("body");
+            body.classList.toggle("dark-mode");
         }
     </script>
 </body>

@@ -74,13 +74,12 @@ def abstract(pubmed_id):
         abstract = data['result'][pubmed_id]['abstracttext']
 
         if abstract:
-            return render_template('abstract.html', abstract=abstract)
+            return jsonify({'abstract': abstract})
         else:
-            return render_template('abstract.html', abstract='Abstract Not Found')
+            return jsonify({'abstract': 'Abstract Not Found'})
 
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
-
 
 if __name__ == '__main__':
     app.run()
