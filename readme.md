@@ -46,3 +46,24 @@ e. Click the "Get Keywords" button to fetch the keywords associated with a speci
 
 # License
 This project is licensed under the MIT License.
+
+# Demo
+* Main UI with search bar where you can search regularly.
+
+![img.png](img.png)
+
+* Searching for ''DNA''
+
+![img_1.png](img_1.png)
+
+* Corresponding results displayed
+
+![img_2.png](img_2.png)
+
+* On clicking the buttons Get Abstract and Authors U see the corresponding results.
+
+![img_3.png](img_3.png)
+
+* Continue with the search for further results
+
+![img_4.png](img_4.png)
