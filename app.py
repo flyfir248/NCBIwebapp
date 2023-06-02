@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 import requests
+import xml.etree.ElementTree as ET
 
 app = Flask(__name__)
 
@@ -61,25 +62,32 @@ def search_papers():
 @app.route('/abstract/<pubmed_id>')
 def abstract(pubmed_id):
     # Construct the PubMed API URL to fetch the abstract
-    base_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi'
-    url = f'{base_url}?db=pubmed&id={pubmed_id}&retmode=json'
+    base_url = 'https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi'
+    url = f'{base_url}?db=pubmed&id={pubmed_id}&retmode=xml'
 
     try:
         # Make the request to the PubMed API to get the article details
         response = requests.get(url)
         response.raise_for_status()
 
-        # Extract the abstract from the API response
-        data = response.json()
-        abstract = data['result'][pubmed_id]['abstracttext']
+        # Parse the XML response
+        xml_data = response.text
+        root = ET.fromstring(xml_data)
 
-        if abstract:
+        # Find the abstract element
+        abstract_element = root.find('.//AbstractText')
+
+        if abstract_element is not None:
+            abstract = abstract_element.text.strip()
             return jsonify({'abstract': abstract})
         else:
             return jsonify({'abstract': 'Abstract Not Found'})
 
     except requests.exceptions.RequestException as e:
         return jsonify({'error': str(e)}), 500
+    except ET.ParseError as e:
+        return jsonify({'error': 'Error parsing XML response'}), 500
+
 
 if __name__ == '__main__':
     app.run()
